@@ -34,3 +34,15 @@ class CaptioningJob(models.Model):
 
     def __unicode__(self):
         return str(self.job_id)
+
+
+class FEVERJob(models.Model):
+    job_id = models.CharField(max_length=1000, blank=True, null=True)
+    claim_text = models.CharField(max_length=1000, blank=True, null=True, default="")
+    predicted_evidence = models.CharField(max_length=1000, blank=True, null=True)
+    docids = models.CharField(max_length=1000, blank=True, null=True)
+    predicted_label = models.CharField(max_length=1000, blank=True, null=True)
+    createdAt = models.DateTimeField("Time", null=True, auto_now_add=True)
+
+    def __unicode__(self):
+        return str(self.job_id)

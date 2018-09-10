@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from grad_cam.models import VqaJob, ClassificationJob, CaptioningJob
+from grad_cam.models import VqaJob, ClassificationJob, CaptioningJob, FEVERJob
 
 
 class VqaJobAdmin(admin.ModelAdmin):
@@ -40,6 +40,10 @@ class CaptioningJobAdmin(admin.ModelAdmin):
         return '<img src="%s" alt="%s" height="150px">' % (obj.gcam_image, obj.gcam_image)
     show_gcam_image_url.allow_tags = True
 
+class FEVERJobAdmin(admin.ModelAdmin):
+    list_display = ('job_id', 'claim_text', 'predicted_evidence', 'predicted_label', 'createdAt')
+
 admin.site.register(VqaJob, VqaJobAdmin)
 admin.site.register(ClassificationJob, ClassificationJobAdmin)
 admin.site.register(CaptioningJob, CaptioningJobAdmin)
+admin.site.register(FEVERJob, FEVERJobAdmin)

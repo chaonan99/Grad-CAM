@@ -82,3 +82,26 @@ def grad_cam_captioning(image_path, caption, out_dir, socketid):
     print(" [x] Sent %r" % message)
     log_to_terminal(socketid, {"terminal": "Job published successfully"})
     connection.close()
+
+
+def grad_cam_fever(claim_text, socketid):
+    connection = pika.BlockingConnection(pika.ConnectionParameters(
+            host='localhost'))
+    channel = connection.channel()
+
+    channel.queue_declare('fever_task_queue', durable=True)
+    message = {
+        'claim_text': claim_text,
+        'socketid': socketid,
+    }
+    # from IPython import embed; embed(); import os; os._exit(1)
+    log_to_terminal(socketid, {"terminal": "Publishing job to FEVER Queue"})
+    channel.basic_publish(exchange='',
+                          routing_key='fever_task_queue',
+                          body=json.dumps(message),
+                          properties=pika.BasicProperties(
+                            delivery_mode=2, # make message persistent
+                          ))
+    print(" [x] Sent %r" % message)
+    log_to_terminal(socketid, {"terminal": "Job published successfully"})
+    connection.close()

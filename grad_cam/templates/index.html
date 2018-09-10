@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Grad-CAM: Gradient-weighted Class Activation Mapping</title>
-    <meta name="description" content="Grad-CAM: Gradient-weighted Class Activation Mapping">
+    <title>chaonan99 Demo Wall</title>
+    <meta name="description" content="chaonan99's demo wall.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,‌​100italic,300,300ita‌​lic,400italic,500,50‌​0italic,700,700itali‌​c,900italic,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
@@ -17,11 +17,11 @@
     <script src="http://cloudcv.org/node/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<body>
 
-  <div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-fixed-top .navbar-collapse">
@@ -29,23 +29,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://cloudcv.org">CloudCV</a>
+            <a class="navbar-brand" href="https://chaonan99.github.io">chaonan99</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a target="_blank" href="https://evalai.cloudcv.org">EvalAI</a></li>
-              <li><a target="_blank" href="http://origami.cloudcv.org">Origami</a></li>
-              <li><a target="_blank" href="http://fabrik.cloudcv.org">Fabrik</a></li>
-              <li><a href="http://gsoc.cloudcv.org" target="_blank">GSoC</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Demos <span class="caret"></span></a>
+              <li><a href="http://robotics4.cs.unc.edu:8000">Home</a></li>
+              <li><a href="http://robotics4.cs.unc.edu:8000/fever">FEVER</a></li>
+              <li><a href="http://robotics4.cs.unc.edu:8000/smart">Smart</a></li>
+<!--               <li><a target="_blank" href="http://fabrik.cloudcv.org">Fabrik</a></li>
+              <li><a href="http://gsoc.cloudcv.org" target="_blank">GSoC</a></li> -->
+<!--               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Demos<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="http://visualchatbot.cloudcv.org" target="_blank">Visual Chatbot</a></li>
                   <li><a href="http://vqa.cloudcv.org" target="_blank">VQA</a></li>
                   <li><a href="http://gradcam.cloudcv.org" target="_blank">Grad-CAM</a></li>
                   <li><a href="http://dbs.cloudcv.org" target="_blank">DBS</a></li>
                 </ul>
-              </li>
+              </li> -->
             </ul>
         </div>
     </div>
@@ -103,8 +104,9 @@ li a{
 
 {% block header_content %}
 
+  <br><br>
   <div class="container">
-    <h1 align="center">Grad-CAM: Gradient-weighted Class Activation Mapping</h1>
+    <h1 align="center">chaonan99's Demo Space</h1>
   </div>
 
 {% endblock %}
@@ -115,38 +117,39 @@ li a{
 
 {% block abstract%}
 <div class="container">
-    <h2 align="center" class="headings">Abstract</h2>
-    <p>We propose a technique for making Convolutional Neural Network (CNN)-based models more transparent by visualizing the regions of input that are "important" for predictions from these models - or visual explanations. Our approach, called Gradient-weighted Class Activation Mapping (Grad-CAM), uses the class-specific gradient information flowing into the final convolutional layer of a CNN to produce a coarse localization map of the important regions in the image. Grad-CAM is a strict generalization of the Class Activation Mapping. Unlike CAM, Grad-CAM requires no re-training and is broadly applicable to any CNN-based architectures. We also show how Grad-CAM may be combined with existing pixel-space visualizations to create a high-resolution class-discriminative visualization (Guided Grad-CAM). We generate Grad-CAM and Guided Grad-CAM visual explanations to better understand image classification, image captioning, and visual question answering (VQA) models. In the context of image classification models, our visualizations (a) lend insight into their failure modes showing that seemingly unreasonable predictions have reasonable explanations, and (b) outperform pixel-space gradient visualizations (Guided Backpropagation and Deconvolution) on the ILSVRC-15 weakly supervised localization task. For image captioning and VQA, our visualizations expose the somewhat surprising insight that common CNN + LSTM models can often be good at localizing discriminative input image regions despite not being trained on grounded image-text pairs.   Finally, we design and conduct human studies to measure if Guided Grad-CAM explanations help users establish trust in the predictions made by deep networks. Interestingly, we show that Guided Grad-CAM helps untrained users successfully discern a "stronger" deep network from a "weaker" one even when both networks make identical predictions.</p>
-    <p><b>Arxiv Paper link: </b><a href="https://arxiv.org/abs/1610.02391">https://arxiv.org/abs/1610.02391</a></p>
-    <img id="network" src="{% static 'images/network.png' %}" width="100%" align="center">
+    <h2 align="center" class="headings"></h2>
+    <p>Here comes demos of my works. The website is adopted from <a href="http://gradcam.cloudcv.org/">Grad Cam</a>.
+    </p>
+    <!-- <p><b>Arxiv Paper link: </b><a href="https://arxiv.org/abs/1610.02391">https://arxiv.org/abs/1610.02391</a></p> -->
+    <!-- <img id="network" src="{% static 'images/network.png' %}" width="100%" align="center"> -->
 </div>
 {% endblock %}
 
 {% block demo_links %}
 
 <div class="container">
-  <h2 align="center" class="headings">Demonstration Links</h2>
+  <!-- <h2 align="center" class="headings">Demonstration Links</h2> -->
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
       <div class="card text-center">
-        <h3 class="card-title" align="center">Visual Question Answering</h3>
-        <a target="_blank" href="{% url 'vqa' %}" class="btn btn-lg btn-primary" >Try Visual Question Answering Demo</a>
+        <h3 class="card-title" align="center">FEVER</h3>
+        <a href="{% url 'fever' %}" class="btn btn-lg btn-primary" >Try FEVER Demo</a>
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="card text-center">
-        <h3 class="card-title" align="center">Classification</h3>
-        <a target="_blank" href="{% url 'classification' %}" class="btn btn-lg btn-primary" >Try Classification Demo</a>
+        <h3 class="card-title" align="center">Smart</h3>
+        <a href="{% url 'smart' %}" class="btn btn-lg btn-primary" >Watch Smart Video</a>
       </div>
     </div>
 
-    <div class="col-md-4">
+<!--     <div class="col-md-4">
       <div class="card text-center">
         <h3 class="card-title" align="center">Captioning</h3>
         <a target="_blank" href="{% url 'captioning' %}" class="btn btn-lg btn-primary text-center">Try Captioning Demo</a>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </div>
@@ -154,7 +157,7 @@ li a{
 {% endblock %}
 
 {% block team %}
-  <div class="container team_div" align="center">
+<!--   <div class="container team_div" align="center">
     <h2 align="center" class="headings" id="team_heading">Grad-CAM Team</h2>
     <div class="row team text-center">
       <div class="col-sm-3" align="center">
@@ -176,7 +179,7 @@ li a{
     </div>
 
     <div class="row team">
-      <div class="col-sm-3" align="center"> 
+      <div class="col-sm-3" align="center">
         <img src="{% static 'images/team/deshraj.png'%}" class="img-responsive img-circle center" alt="Cinque Terre">
         <div class="member-name" align="center"><a  target="_blank" href="https://www.linkedin.com/in/deshraj-yadav-34325975">Deshraj Yadav</a></div>
       </div>
@@ -194,7 +197,7 @@ li a{
       </div>
     </div>
 
-  </div>
+  </div> -->
 {% endblock%}
 
 {% block footer %}

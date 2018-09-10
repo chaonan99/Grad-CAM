@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.conf import settings
 from channels import Group
 
-from grad_cam.sender import grad_cam_classification, grad_cam_vqa, grad_cam_captioning
+from grad_cam.sender import grad_cam_classification, grad_cam_vqa, grad_cam_captioning, grad_cam_fever
 from grad_cam.utils import log_to_terminal
 import grad_cam.constants as constants
 import uuid
@@ -85,6 +85,26 @@ def captioning(request, template_name="captioning/captioning.html"):
 
     demo_images = get_demo_images(constants.COCO_IMAGES_PATH)
     return render(request, template_name, {"demo_images": demo_images, 'socketid': socketid})
+
+
+def fever(request, template_name="fever/fever.html"):
+    socketid = uuid.uuid4()
+    if request.method == "POST":
+        try:
+            # from IPython import embed; embed(); import os; os._exit(1)
+            socketid = request.POST.get('socketid')
+            claim_text = request.POST.get('src')
+            log_to_terminal(socketid, {"terminal": "Starting FEVER job..."})
+            response = grad_cam_fever(str(claim_text), socketid)
+        except Exception, err:
+            log_to_terminal(socketid, {"terminal": traceback.print_exc()})
+    # demo_images = get_demo_images(constants.COCO_IMAGES_PATH)
+    return render(request, template_name, {'socketid': socketid})
+
+
+def smart(request, template_name="smart/smart.html"):
+    socketid = uuid.uuid4()
+    return render(request, template_name, {'socketid': socketid})
 
 
 def file_upload(request):

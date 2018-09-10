@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block header_content %}
+
+<a href="https://github.com/chaonan99/Grad-CAM" target="_blank"><img style="position: fixed; top: 0; right: 0; border: 0; z-index:2000;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+<br><br>
+<div class="container">
+    <div class="page-header">
+        <h1 align="center">SMaRt: <font color="red">S</font>peech-Driven <font color="red">Ma</font>nipulation <font color="red">R</font>obo<font color="red">t</font></h1>
+    </div>
+    <h2 align="center" class="headings">Abstract</h2>
+    <p style="font-size: 14pt">Controlling robots to do task for human via natural language is one of the most concerned topic in human-robot interaction. In this project, we propose a robot system for executing simple command (pick, place, pour, etc.) on the target object via natural language description. Specifically, given a set of objects (cup, bottle, teddy bear, etc.) on a table and a spoken English description, e.g., "catch me the bottle on the left", our robotic system will recognize the audio input, comprehend the instruction, localize target objects, and perform the manipulation task. We name the system SMaRt: Speech-Driven Manipulation Robot.</p>
+<img id="network" src="static/images/smart_system.png" width="100%" align="center">
+</div>
+
+{% endblock %}
+
+{% block demo_images %}
+{% endblock %}
+
+{% block form %}
+<style type="text/css">
+
+  .caption {
+    /*display: block;*/
+    /*text-align: center;*/
+    font-size: 18px !important;
+    font-weight: bold;
+}
+
+#inputCaption, #predictedCaption{
+    font-weight: bold;
+}
+
+.under
+{
+position:absolute;
+/*left:0px;
+top:0px;*/
+z-index:-1;
+}
+
+.over
+{
+position:absolute;
+/*left:40px;*/
+/*top:10px;*/
+z-index:0;
+mix-blend-mode: multiply;
+}
+
+#gradCamCaption{
+  position: relative;
+  padding-top: 350px;
+}
+
+.finalImages{
+  width: 350px !important;
+  height: 350px !important;
+  padding: 6px;
+}
+
+.resultText{
+  margin-bottom: 15px !important;
+}
+
+</style>
+
+{% endblock %}
+
+{% block terminal %}
+<div class="container">
+{% endblock %}
+
+{% block result %}
+<div align="center">
+  <h3><strong>Demo 1</strong></h3>
+  <iframe width="660" height="415" src="https://www.youtube.com/embed/x65KTkdOqAM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+</div>
+<div align="center">
+  <h3><strong>Demo 2</strong></h3>
+  <iframe width="660" height="415" src="https://www.youtube.com/embed/Me-pKSmopdg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+</div>
+<div align="center">
+  <h3><strong>Demo 3</strong></h3>
+  <iframe width="660" height="415" src="https://www.youtube.com/embed/6zOPY1CK434" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+</div>
+{% endblock %}
+
+{% block credits %}
+<h2 class="page-header"> Credits </h2>
+  <font size="4">
+    <!-- <a href="https://github.com/karpathy/neuraltalk2">Code for Neuraltalk2</a><br> -->
+    This work is in collaboration with <a href="http://www.cs.unc.edu/~licheng/" target="_blank">Licheng Yu</a>
+    <br><br>
+  </font>
+  <br>
+</div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"></script>
+</html>
+{% endblock %}

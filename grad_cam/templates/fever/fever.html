@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+
+{% block header_content %}
+
+<a href="https://github.com/chaonan99/Grad-CAM" target="_blank"><img style="position: fixed; top: 0; right: 0; border: 0; z-index:2000;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+<br><br>
+<div class="container">
+    <div class="page-header">
+        <h1 align="center">Fact Extraction and Verification Demo</h1>
+    </div>
+    <h2 align="center" class="headings">Abstract</h2>
+    <p style="font-size: 14pt">The increasing concern with misinformation has stimulated research efforts on automatic fact checking. The recently-released FEVER dataset introduced a benchmark fact-verification task in which a system is asked to verify a claim using evidential sentences from Wikipedia documents.
+In this paper, we present a connected system consisting of three homogeneous neural semantic matching models that conduct document retrieval, sentence selection, and claim verification jointly for fact extraction and verification.
+For evidence retrieval (document retrieval and sentence selection), unlike traditional vector space IR models in which queries and sources are matched in some pre-designed term vector space, we develop neural models to perform deep semantic matching from raw textual input, assuming no intermediate term representation and no access to structured external knowledge bases. We also show that Pageview frequency can also help improve the performance of evidence retrieval results, that later can be matched by using our neural semantic matching network.
+For claim verification, unlike previous approaches that simply feed upstream retrieved evidence and the claim to a natural language inference (NLI) model, we further enhance the NLI model by providing it with internal semantic relatedness scores (hence integrating it with the evidence retrieval modules) and ontological WordNet features.
+Experiments on the FEVER dataset indicate that (1) our neural semantic matching method outperforms the term vector space model by significant margins on all evidence retrieval metrics, (2) the additional relatedness score and WordNet features improve the NLI model via better semantic awareness,
+and (3) with successful improvement on all three stages, the complete model is able to achieve the state-of-the-art results on the FEVER test set (two times greater than baseline results).
+</p>
+<img id="network" src="static/images/fever_system.png" width="100%" align="center">
+</div>
+
+{% endblock %}
+
+{% block demo_images %}
+{% endblock %}
+
+{% block form %}
+<style type="text/css">
+
+.caption {
+  /*display: block;*/
+  /*text-align: center;*/
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+#inputCaption, #predictedCaption{
+    font-weight: bold;
+}
+
+.under
+{
+position:absolute;
+/*left:0px;
+top:0px;*/
+z-index:-1;
+}
+
+.over
+{
+position:absolute;
+/*left:40px;*/
+/*top:10px;*/
+z-index:0;
+mix-blend-mode: multiply;
+}
+
+#gradCamCaption{
+  position: relative;
+  padding-top: 350px;
+}
+
+.finalImages{
+  width: 350px !important;
+  height: 350px !important;
+  padding: 6px;
+}
+
+.resultText{
+  margin-bottom: 15px !important;
+}
+
+</style>
+
+<div class="container">
+  <div class="page-header">
+    <h2 id="userImages">Type claim here:</h2>
+  </div>
+  <div>
+    Example: Colin Kaepernick became a starting quarterback during the 49ers 63rd season in the National Football League.<br>
+    Nicholas Brody is a character on Homeland.<br>
+    Charles Manson has been proven innocent of all crimes.<br>
+  </div>
+  {% block url_content %}
+    {% include 'type_claim.html' %}
+  {% endblock %}
+
+{% endblock %}
+
+{% block terminal %}
+
+<div class="container">
+        <h3 id="termstart">Terminal: </h3>
+
+        <div id="Console"
+             style="height:300px; color: #FFFFFF; background-color: #2B2A2B; overflow:scroll; padding: 10px;">
+            <ul id="comments" style='list-style-type:none;'>
+            </ul>
+        </div>
+        <br>
+
+        <!-- <div id="underTheHood">
+            <p><h3>How it works</h3></p>
+          <font size="4">
+                <ol>
+                    <li>You upload an image.</li>
+                    <li>Your request is sent to our servers with GPUs courtesy NVIDIA.</li>
+                    <li>Our servers run our deep-learning based algorithm.</li>
+                    <li>Results and updates are shown in real-time.</li>
+                </ol>
+            </font><br><br>
+        </div> -->
+
+{% endblock %}
+
+{% block result %}
+<script type="text/javascript">
+  // Overriden
+  Dropzone.options.myDropzone = {
+    autoProcessQueue: true,
+    uploadMultiple: false,
+    maxFiles: 10,
+
+    init: function() {
+      var myDropzone = this;
+      this.hiddenFileInput.removeAttribute('multiple');
+      myDropzone.on('success', function(file, data){
+        console.log('chaonan99')
+        console.log(data);
+        // $("#inputImageAfterUpload").attr('src', data['file_path']);
+        $("#ResultDiv").show();
+        $("#show-grad-cam-result").hide();
+        $("#demoType").val("uploadedImageType");
+        $("#question").val("");
+        $("#Caption").val("");
+        $('#comments').prepend('<br>');
+        $('#comments').prepend('<li>' + "Image uploaded successfully..." + '</li>');
+        scrollToElement($("#termstart"));
+        // scrollToElement($("#ResultDiv"));
+      });
+    }
+  };
+</script>
+
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+  var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+  var socket = new ReconnectingWebSocket(ws_scheme + '://' + window.location.host + "/chat" + window.location.pathname);
+
+  socket.onopen = function() {
+      console.log("User connected to the socket with socketid "+ "{{socketid }}");
+      socket.send("{{ socketid }}");
+  }
+
+  socket.onmessage = function(response) {
+    console.log("Getting response from the worker.....");
+    console.log("chaonan99")
+    console.log(JSON.parse(response.data));
+
+    response = JSON.parse(response.data);
+
+    if ("info" in response){
+      console.log("Info is there as the key");
+    }
+
+    if ("terminal" in response){
+
+      $('#comments').prepend('<li>' + response['terminal'] + '</li>');
+    }
+
+    if("result" in response){
+
+      scrollToElement($("#resultHeading"));
+
+      result = JSON.parse(response['result']);
+      var predicted_evidence = result['predicted_evidence'];
+      var docids = result['docids'];
+      var i;
+      $("#ResultDiv").show();
+      $('#evidencelist').text('');
+      $('#doclist').text('');
+      for (i = 0; i < predicted_evidence.length; i++) {
+        // $('#evidencelist').append('<li>' + predicted_evidence[i] + '</li><br>');
+        $('#evidencelist').append('<li>' + predicted_evidence[i] + '</li><br>');
+      }
+      for (i = 0; i < docids.length; i++) {
+        $('#doclist').append('<li><a href="' + docids[i] + '">' +
+                             docids[i] + '</a></li><br>')
+      }
+      $('#verdict').text(result['predicted_label']);
+    }
+  }
+});
+
+  var getLocation = function(href) {
+      var l = document.createElement("a");
+      l.href = href;
+      return l;
+  };
+
+function submitClaim() {
+  var src = document.getElementById("claim_text").value;
+  $('#comments').prepend('<br>');
+  // $('#comments').prepend('<li>' + "Starting the Image Download process." + '</li>');
+
+  scrollToElement($("#termstart"));
+
+  $.ajax({
+    type : "POST",
+    // url  : '{% url 'upload-url' %}',
+    data : {'src': src  , 'socketid': "{{socketid}}", 'csrfmiddlewaretoken': '{{ csrf_token }}', type:"fever"}
+  }).done(function(data){
+    console.log(data);
+    // $("#inputImageAfterUpload").attr('src', data["file_path"]);
+    // $("#label").val("");
+    // $("#show-grad-cam-result").hide();
+    // $("#ResultDiv").show();
+  });
+};
+
+</script>
+<br>
+  <div class="page-header">
+    <h2 id="resultHeading" class="center">FEVER Prediction Results</h2>
+  </div>
+
+<!-- <div id="ResultDiv" class="row" style="padding-bottom:50px; display:None;">
+  <div class="col-md-5" style="padding-bottom: 30px; clear: both;">
+    <img class="img-responsive" src="" style="height: 300px;" id="inputImageAfterUpload">
+  </div>
+  <div class="col-md-7" style="padding-bottom: 30px;">
+    <input id="Caption" class="form-control" name="caption" placeholder="Enter the caption...(Optional)"><br>
+    <input type="button" value="Submit" onclick="submitImageForCaptioning()" class="btn btn-primary">
+</div> -->
+
+
+
+<div id="ResultDiv" class="row" style="padding-bottom:50px; display:None;">
+<!-- <div id="ResultDiv" class="row" style="padding-bottom:50px;"> -->
+  <!-- <div class="col-md-5" style="padding-bottom: 30px; clear: both;"> -->
+    <div>
+      <div class="col-md-6 col-sm-12" style="z-index: 1">
+        <h3>Evidence: </h3>
+        <div id="EvidenceDiv"
+             style="width:auto; height:300px; overflow:scroll; padding: 10px;">
+            <ul id="evidencelist" style='list-style-type:none;font-size: 12pt'>
+              Please Wait...
+            </ul>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12" style="z-index: 1">
+        <h3>Retrieved from: </h3>
+        <div id="DocumentDiv"
+             style="width:auto; height:300px; overflow:scroll; padding: 10px;">
+            <ul id="doclist" style='list-style-type:none;font-size: 12pt'>
+              Please Wait...
+            </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <font size="5">Verdict: </font><font size="5" id="verdict">Please Wait...</font>
+    </div>
+<!-- </div> -->
+</div>
+{% endblock %}
+
+{% block credits %}
+<h2 class="page-header"> Credits </h2>
+  <font size="4">
+    <!-- <a href="https://github.com/karpathy/neuraltalk2">Code for Neuraltalk2</a><br> -->
+    Built by <a href="https://chaonan99.github.io/about" target="_blank">@chaonan99</a>
+    and <a href="https://easonnie.github.io/" target="_blank">@yixin</a>
+    <br><br>
+  </font>
+  <br>
+</div>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"></script>
+</html>
+{% endblock %}
